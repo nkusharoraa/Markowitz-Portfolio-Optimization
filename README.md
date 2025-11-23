@@ -8,10 +8,12 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Code style](https://img.shields.io/badge/Code%20style-Professional-brightgreen)]()
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success)]()
+[![GitHub Pages](https://img.shields.io/badge/Demo-Live-orange)](https://yourusername.github.io/portfolio-optimization/)
 
-**Clean** • **Modular** • **User-Friendly** • **Beautiful Visualizations**
+**Clean** • **Modular** • **User-Friendly** • **Beautiful Visualizations** • **Web App Available**
 
 [Quick Start](#-quick-start) •
+[Web App](https://yourusername.github.io/portfolio-optimization/) •
 [Features](#-features) •
 [Documentation](#-documentation) •
 [Examples](#-examples)
@@ -22,11 +24,15 @@
 
 ## 🎯 What This Does
 
-Transform your **CSV price data** into **optimized investment portfolios** with just one command:
+Transform your **CSV price data** into **optimized investment portfolios**:
 
+**💻 Python CLI:**
 ```bash
 python optimize.py your_prices.csv
 ```
+
+**🌐 Web App (No Installation):**
+Visit: [portfolio-optimization.github.io](https://yourusername.github.io/portfolio-optimization/)
 
 Get professional-quality:
 - ✨ **Optimal portfolio weights** minimizing risk for your target return
@@ -37,6 +43,19 @@ Get professional-quality:
 ---
 
 ## ⚡ Quick Start
+
+### 🌐 Option A: Web App (Fastest - No Installation!)
+
+1. Visit **[Web Application](https://yourusername.github.io/portfolio-optimization/)**
+2. Enter your asset data or upload CSV
+3. Click "Optimize Portfolio"
+4. Get instant results!
+
+**Perfect for:**  quick analysis, demonstrations, learning
+
+---
+
+### 💻 Option B: Python CLI (Most Powerful)
 
 ### 1️⃣ Setup (One-Time)
 
