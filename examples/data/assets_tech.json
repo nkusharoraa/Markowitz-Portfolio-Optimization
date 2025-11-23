@@ -1,0 +1,43 @@
+{
+    "description": "Technology sector portfolio with high-growth stocks",
+    "asset_names": [
+        "Cloud Computing",
+        "AI/ML",
+        "Semiconductors",
+        "Cybersecurity"
+    ],
+    "expected_returns": [
+        0.18,
+        0.20,
+        0.16,
+        0.15
+    ],
+    "covariance_matrix": [
+        [
+            0.0900,
+            0.0540,
+            0.0450,
+            0.0360
+        ],
+        [
+            0.0540,
+            0.1024,
+            0.0512,
+            0.0410
+        ],
+        [
+            0.0450,
+            0.0512,
+            0.0784,
+            0.0392
+        ],
+        [
+            0.0360,
+            0.0410,
+            0.0392,
+            0.0729
+        ]
+    ],
+    "risk_free_rate": 0.02,
+    "notes": "Higher returns with higher volatility compared to traditional assets. Covariances reflect sector correlations."
+}

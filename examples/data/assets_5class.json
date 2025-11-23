@@ -1,0 +1,20 @@
+{
+  "description": "Traditional 5-asset class portfolio with stocks, bonds, REITs, and commodities",
+  "asset_names": [
+    "US Stocks",
+    "Intl Stocks",
+    "US Bonds",
+    "REITs",
+    "Gold"
+  ],
+  "expected_returns": [0.10, 0.09, 0.04, 0.08, 0.05],
+  "covariance_matrix": [
+    [0.0400, 0.0240, 0.0040, 0.0200, 0.0020],
+    [0.0240, 0.0484, 0.0033, 0.0180, 0.0015],
+    [0.0040, 0.0033, 0.0064, 0.0025, 0.0010],
+    [0.0200, 0.0180, 0.0025, 0.0361, 0.0018],
+    [0.0020, 0.0015, 0.0010, 0.0018, 0.0225]
+  ],
+  "risk_free_rate": 0.02,
+  "notes": "Expected returns are annualized. Covariance matrix represents annualized covariance of returns."
+}
