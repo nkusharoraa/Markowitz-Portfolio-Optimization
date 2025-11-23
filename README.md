@@ -13,7 +13,7 @@
 **Clean** • **Modular** • **User-Friendly** • **Beautiful Visualizations** • **Web App Available**
 
 [Quick Start](#-quick-start) •
-[Web App](https://yourusername.github.io/portfolio-optimization/) •
+[Web App](https://nkusharoraa.github.io/portfolio-optimization/) •
 [Features](#-features) •
 [Documentation](#-documentation) •
 [Examples](#-examples)
