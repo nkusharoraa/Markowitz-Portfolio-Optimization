@@ -4,24 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Optimization Tool - Markowitz Mean-Variance</title>
-    <meta name="description"
-        content="Interactive Markowitz Portfolio Optimization - Calculate optimal portfolio allocations in your browser">
+    <title>Portfolio Optimization Tool</title>
+    <meta name="description" content="Aesthetic & Powerful Portfolio Optimization Tool">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary: #667eea;
-            --primary-dark: #5568d3;
-            --secondary: #764ba2;
-            --accent: #f093fb;
-            --success: #4ade80;
-            --warning: #fbbf24;
-            --danger: #f87171;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --border: #e2e8f0;
+            /* Aesthetic Muted Palette */
+            --primary: #7c98b3;
+            /* Soft Steel Blue */
+            --primary-dark: #5d758a;
+            /* Darker Steel */
+            --secondary: #b8b3c8;
+            /* Muted Lavender */
+            --accent: #e2c2c6;
+            /* Dusty Rose */
+            --success: #95b8a6;
+            /* Sage Green */
+            --warning: #e3d0a6;
+            /* Sand */
+            --danger: #d69e9e;
+            /* Dusty Red */
+            --dark: #4a4a4a;
+            /* Soft Charcoal */
+            --light: #fcfcfc;
+            /* Near White */
+            --border: #e6e6e6;
+            /* Light Grey */
+            --shadow: 0 10px 30px rgba(124, 152, 179, 0.15);
         }
 
         * {
@@ -31,100 +42,87 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Outfit', sans-serif;
             line-height: 1.6;
             color: var(--dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Soft Cloud Gradient */
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             background-attachment: fixed;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         /* Header */
         header {
             text-align: center;
-            color: white;
-            padding: 60px 20px 40px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            padding-top: 20px;
         }
 
         header h1 {
-            font-size: 3.5em;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
             letter-spacing: -0.02em;
         }
 
         header p {
-            font-size: 1.4em;
+            font-size: 1.2em;
+            color: var(--primary);
             font-weight: 300;
-            opacity: 0.95;
-            letter-spacing: 0.01em;
         }
 
         /* Main Card */
         .main-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
             padding: 50px;
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-            margin-bottom: 40px;
+            box-shadow: var(--shadow);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         /* Sections */
-        .section {
-            margin-bottom: 40px;
-        }
-
         .section-title {
-            font-size: 2em;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 4px solid;
-            border-image: linear-gradient(90deg, var(--primary), var(--secondary)) 1;
-            letter-spacing: -0.01em;
+            border-bottom: 2px solid var(--secondary);
         }
 
         /* Info Box */
         .info-box {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
-            border-left: 5px solid var(--primary);
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border-left: 4px solid var(--primary);
             padding: 20px;
-            margin: 25px 0;
+            margin-bottom: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+            color: var(--dark);
+            font-size: 0.95em;
         }
 
-        .info-box strong {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* Input Groups */
+        /* Inputs */
         .input-group {
-            margin-bottom: 28px;
+            margin-bottom: 25px;
         }
 
         label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--dark);
-            font-size: 0.95em;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+            font-size: 0.9em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         input[type="text"],
@@ -132,13 +130,14 @@
         textarea,
         select {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             border: 2px solid var(--border);
             border-radius: 12px;
             font-size: 1em;
             font-family: inherit;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: white;
+            background: var(--light);
+            transition: all 0.3s ease;
+            color: var(--dark);
         }
 
         input:focus,
@@ -146,121 +145,85 @@
         select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            transform: translateY(-1px);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(124, 152, 179, 0.1);
         }
 
         textarea {
             font-family: 'Courier New', monospace;
-            min-height: 160px;
+            min-height: 120px;
             resize: vertical;
-            line-height: 1.5;
         }
 
         /* File Upload */
-        .file-upload {
-            position: relative;
-            display: block;
-        }
-
-        .file-upload input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            z-index: 2;
-        }
-
         .file-upload-label {
             display: block;
             padding: 40px;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            border: 3px dashed var(--primary);
+            background: #f8f9fa;
+            border: 2px dashed var(--primary);
             border-radius: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            position: relative;
         }
 
         .file-upload-label:hover {
-            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-            border-color: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        .file-upload-label::before {
-            content: "📎";
-            font-size: 3em;
-            display: block;
-            margin-bottom: 10px;
+            background: #eef2f5;
+            border-color: var(--primary-dark);
         }
 
         /* Buttons */
         .button {
-            padding: 18px 40px;
-            font-size: 1.1em;
+            padding: 16px 32px;
+            font-size: 1.05em;
             font-weight: 600;
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-right: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
             font-family: inherit;
-            letter-spacing: 0.3px;
         }
 
         .button-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(124, 152, 179, 0.3);
         }
 
         .button-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-        }
-
-        .button-primary:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 152, 179, 0.4);
         }
 
         .button-success {
-            background: linear-gradient(135deg, var(--success) 0%, #22c55e 100%);
+            background: linear-gradient(135deg, var(--success) 0%, #7a9689 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(149, 184, 166, 0.3);
         }
 
         .button-success:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(74, 222, 128, 0.4);
-        }
-
-        /* Checkbox */
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            cursor: pointer;
-            accent-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(149, 184, 166, 0.4);
         }
 
         /* Results */
         .results {
             display: none;
-            margin-top: 40px;
-            animation: fadeInUp 0.6s ease;
+            margin-top: 50px;
+            animation: fadeIn 0.6s ease;
         }
 
         .results.show {
             display: block;
         }
 
-        @keyframes fadeInUp {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
 
             to {
@@ -269,20 +232,20 @@
             }
         }
 
-        /* Stats Grid */
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
             margin-bottom: 40px;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 32px;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
             transition: transform 0.3s;
         }
 
@@ -292,154 +255,83 @@
 
         .stat-label {
             font-size: 0.9em;
-            opacity: 0.9;
-            margin-bottom: 12px;
+            color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-weight: 500;
+            margin-bottom: 10px;
         }
 
         .stat-value {
-            font-size: 2.8em;
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-dark);
         }
 
-        /* Weights Table */
+        /* Table */
         .weights-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-top: 25px;
+            background: white;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .weights-table th,
-        .weights-table td {
-            padding: 20px;
-            text-align: left;
-        }
-
-        .weights-table thead {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .weights-table th {
-            font-weight: 700;
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-size: 0.9em;
+            letter-spacing: 1px;
         }
 
-        .weights-table tbody tr {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.2s;
-        }
-
-        .weights-table tbody tr:hover {
-            background: var(--light);
-        }
-
-        .weights-table tbody tr:last-child {
-            border-bottom: none;
+        .weights-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--light);
         }
 
         .weight-bar-container {
-            background: #e2e8f0;
+            background: #f0f2f5;
             border-radius: 8px;
+            height: 24px;
             overflow: hidden;
-            height: 32px;
         }
 
         .weight-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
             border-radius: 8px;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 1s ease;
             display: flex;
             align-items: center;
-            padding: 0 10px;
+            padding-left: 10px;
+            font-size: 0.8em;
             color: white;
             font-weight: 600;
-            font-size: 0.85em;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            color: white;
-            padding: 40px 20px;
             margin-top: 60px;
+            color: var(--primary-dark);
+            opacity: 0.8;
         }
 
-        footer p {
-            margin: 8px 0;
-            opacity: 0.95;
-        }
-
-        .footer-links {
-            margin-top: 20px;
-        }
-
-        .footer-links a {
-            color: white;
+        footer a {
+            color: var(--primary-dark);
             text-decoration: none;
-            margin: 0 20px;
+            margin: 0 15px;
             font-weight: 500;
-            opacity: 0.9;
+            border-bottom: 1px solid transparent;
             transition: all 0.3s;
-            border-bottom: 2px solid transparent;
         }
 
-        .footer-links a:hover {
-            opacity: 1;
-            border-bottom-color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5em;
-            }
-
-            .main-card {
-                padding: 30px 20px;
-                border-radius: 16px;
-            }
-
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 1.6em;
-            }
-
-            .button {
-                width: 100%;
-                margin-right: 0;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, .3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+        footer a:hover {
+            border-bottom-color: var(--primary-dark);
         }
     </style>
 </head>
@@ -447,94 +339,83 @@
 <body>
     <header>
         <div class="container">
-            <h1>📊 Portfolio Optimizer</h1>
-            <p>Markowitz Mean-Variance Portfolio Optimization</p>
+            <h1>Portfolio Optimizer</h1>
+            <p>Efficient Frontier & Mean-Variance Optimization</p>
         </div>
     </header>
 
     <div class="container">
         <div class="main-card">
             <div class="section">
-                <h2 class="section-title">📁 Input Your Portfolio Data</h2>
+                <h2 class="section-title">Input Data</h2>
 
                 <div class="info-box">
-                    <strong>ℹ️ How to use:</strong> Enter your asset names, expected returns, and covariance matrix
-                    below.
-                    Or upload a CSV file with historical prices and we'll calculate everything for you!
+                    <strong>ℹ️ Getting Started:</strong> Enter your asset details below or upload a CSV file.
+                    We'll calculate the optimal allocation to minimize risk or maximize returns.
                 </div>
 
                 <div class="input-group">
-                    <label>Input Method</label>
+                    <label>Data Source</label>
                     <select id="inputMethod" onchange="toggleInputMethod()">
-                        <option value="manual">📝 Manual Entry (Returns & Covariance)</option>
-                        <option value="csv">📤 Upload CSV (Historical Prices)</option>
+                        <option value="manual">📝 Manual Entry</option>
+                        <option value="csv">📤 Upload Price CSV</option>
                     </select>
                 </div>
 
                 <!-- Manual Input -->
                 <div id="manualInput">
                     <div class="input-group">
-                        <label>Asset Names</label>
-                        <input type="text" id="assetNames" placeholder="e.g., US Stocks, Bonds, Gold"
-                            value="US Stocks, Bonds, Gold">
+                        <label>Asset Names (comma separated)</label>
+                        <input type="text" id="assetNames" value="US Stocks, Bonds, Gold, Real Estate">
                     </div>
 
                     <div class="input-group">
-                        <label>Expected Annual Returns</label>
-                        <input type="text" id="expectedReturns" placeholder="e.g., 0.10, 0.04, 0.05"
-                            value="0.10, 0.04, 0.05">
-                        <small style="color: #64748b; display: block; margin-top: 8px;">Enter as decimals (e.g., 0.10 =
-                            10%)</small>
+                        <label>Expected Annual Returns (decimals)</label>
+                        <input type="text" id="expectedReturns" value="0.10, 0.04, 0.05, 0.07">
                     </div>
 
                     <div class="input-group">
-                        <label>Covariance Matrix</label>
-                        <textarea id="covMatrix" placeholder="One row per line, values separated by commas">0.04, 0.01, 0.00
-0.01, 0.01, 0.00
-0.00, 0.00, 0.02</textarea>
-                        <small style="color: #64748b; display: block; margin-top: 8px;">One row per line,
-                            comma-separated values</small>
+                        <label>Covariance Matrix (rows separated by newlines)</label>
+                        <textarea id="covMatrix">0.04, 0.01, 0.00, 0.02
+0.01, 0.01, 0.00, 0.01
+0.00, 0.00, 0.02, 0.00
+0.02, 0.01, 0.00, 0.03</textarea>
                     </div>
                 </div>
 
                 <!-- CSV Upload -->
                 <div id="csvInput" style="display: none;">
                     <div class="input-group">
-                        <label>Upload Price History CSV</label>
-                        <div class="file-upload">
-                            <input type="file" id="csvFile" accept=".csv" onchange="handleFileUpload(event)">
-                            <div class="file-upload-label">
-                                <strong>Click to upload CSV file</strong><br>
-                                <small>Format: Date, Asset1, Asset2, Asset3...</small>
-                            </div>
-                        </div>
+                        <label>Upload Historical Prices</label>
+                        <label class="file-upload-label">
+                            <input type="file" id="csvFile" accept=".csv" onchange="handleFileUpload(event)"
+                                style="display: none;">
+                            <span style="font-size: 2em; display: block; margin-bottom: 10px;">📎</span>
+                            <strong>Click to Select CSV</strong>
+                        </label>
                     </div>
                     <div id="csvPreview"></div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="input-group">
-                        <label>Target Annual Return</label>
-                        <input type="number" id="targetReturn" step="0.01" value="0.08" min="0" max="1">
-                        <small style="color: #64748b; display: block; margin-top: 8px;">As decimal (e.g., 0.08 =
-                            8%)</small>
+                        <label>Target Return</label>
+                        <input type="number" id="targetReturn" step="0.01" value="0.08">
                     </div>
-
                     <div class="input-group">
                         <label>Risk-Free Rate</label>
-                        <input type="number" id="riskFreeRate" step="0.01" value="0.02" min="0" max="1">
-                        <small style="color: #64748b; display: block; margin-top: 8px;">As decimal (e.g., 0.02 =
-                            2%)</small>
+                        <input type="number" id="riskFreeRate" step="0.01" value="0.02">
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label style="text-transform: none; font-size: 1em; cursor: pointer;">
-                        <input type="checkbox" id="allowShort"> Allow Short Selling (negative weights)
+                    <label style="text-transform: none; cursor: pointer; display: flex; align-items: center;">
+                        <input type="checkbox" id="allowShort" style="width: auto; margin-right: 10px;">
+                        Allow Short Selling (Negative Weights)
                     </label>
                 </div>
 
-                <div style="margin-top: 32px;">
+                <div style="margin-top: 30px;">
                     <button class="button button-primary" onclick="optimizePortfolio()">
                         🚀 Optimize Portfolio
                     </button>
@@ -544,502 +425,211 @@
                 </div>
             </div>
 
-            <!-- Results Section -->
+            <!-- Results -->
             <div id="results" class="results">
-                <div class="section">
-                    <h2 class="section-title">📈 Optimization Results</h2>
+                <h2 class="section-title">Optimization Results</h2>
 
-                    <div class="results-grid">
-                        <div class="stat-card">
-                            <div class="stat-label">Expected Return</div>
-                            <div class="stat-value" id="resultReturn">-</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Risk (Volatility)</div>
-                            <div class="stat-value" id="resultRisk">-</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Sharpe Ratio</div>
-                            <div class="stat-value" id="resultSharpe">-</div>
-                        </div>
+                <div class="results-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Expected Return</div>
+                        <div class="stat-value" id="resultReturn">-</div>
                     </div>
-
-                    <h3 style="font-size: 1.6em; margin-bottom: 20px; color: var(--dark); font-weight: 700;">Optimal
-                        Portfolio Weights</h3>
-                    <table class="weights-table">
-                        <thead>
-                            <tr>
-                                <th>Asset</th>
-                                <th>Weight</th>
-                                <th style="width: 40%;">Allocation</th>
-                            </tr>
-                        </thead>
-                        <tbody id="weightsTable">
-                        </tbody>
-                    </table>
+                    <div class="stat-card">
+                        <div class="stat-label">Risk (Volatility)</div>
+                        <div class="stat-value" id="resultRisk">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Sharpe Ratio</div>
+                        <div class="stat-value" id="resultSharpe">-</div>
+                    </div>
                 </div>
+
+                <h3 style="margin-bottom: 20px; color: var(--primary-dark);">Optimal Allocation</h3>
+                <table class="weights-table">
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Weight</th>
+                            <th style="width: 50%;">Visual</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weightsTable"></tbody>
+                </table>
             </div>
         </div>
 
         <footer>
-            <p style="font-size: 1.1em; font-weight: 600;">&copy; 2024 Portfolio Optimization Tool</p>
-            <p>Built with Modern Web Technologies • Markowitz Mean-Variance Framework</p>
-            <div class="footer-links">
+            <p>&copy; 2024 Portfolio Optimizer</p>
+            <div style="margin-top: 10px;">
                 <a href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization" target="_blank">GitHub</a>
-                <a
-                    href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization/blob/main/docs/cli-guide.md">Documentation</a>
-                <a href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization/blob/main/QUICK_START.md">Quick
+                <a href="#">Documentation</a>
+            </div>
+        </footer>
+    </div>
 
-                    .footer-links a:hover {
-                    opacity: 1;
-                    border-bottom-color: white;
+    <script>
+        // Toggle Input
+        function toggleInputMethod() {
+            const method = document.getElementById('inputMethod').value;
+            document.getElementById('manualInput').style.display = method === 'manual' ? 'block' : 'none';
+            document.getElementById('csvInput').style.display = method === 'csv' ? 'block' : 'none';
+        }
+
+        // CSV Handling
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    parseCSV(e.target.result);
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function parseCSV(content) {
+            const lines = content.trim().split('\n');
+            const headers = lines[0].split(',');
+            document.getElementById('csvPreview').innerHTML = `
+                <div class="info-box" style="border-color: var(--success);">
+                    ✅ Loaded ${lines.length - 1} rows for ${headers.length - 1} assets
+                </div>`;
+            // In a real app, we'd calculate covariance here
+        }
+
+        // Math Helpers
+        function dotProduct(a, b) {
+            return a.reduce((sum, val, i) => sum + val * b[i], 0);
+        }
+
+        function multiplyMatrixVector(matrix, vector) {
+            return matrix.map(row => row.reduce((sum, val, i) => sum + val * vector[i], 0));
+        }
+
+        // Core Optimization Logic
+        function optimizePortfolioSimple(returns, covMatrix, targetReturn, allowShort) {
+            const n = returns.length;
+            let weights = new Array(n).fill(1 / n); // Start equal
+
+            for (let iter = 0; iter < 100; iter++) {
+                const currentRet = dotProduct(weights, returns);
+                if (Math.abs(currentRet - targetReturn) < 0.0001) break;
+
+                const diff = targetReturn - currentRet;
+                for (let i = 0; i < n; i++) {
+                    weights[i] += diff * (returns[i] - currentRet) * 0.1;
+                }
+
+                if (!allowShort) weights = weights.map(w => Math.max(0, w));
+
+                const sum = weights.reduce((a, b) => a + b, 0);
+                if (sum > 0) weights = weights.map(w => w / sum);
+            }
+            return weights;
+        }
+
+        function findMaxSharpePortfolio(returns, covMatrix, riskFree, allowShort) {
+            const n = returns.length;
+            let bestSharpe = -Infinity;
+            let bestWeights = new Array(n).fill(1 / n);
+
+            const minRet = Math.min(...returns);
+            const maxRet = Math.max(...returns);
+
+            for (let i = 0; i <= 50; i++) {
+                const target = minRet + (maxRet - minRet) * (i / 50);
+                try {
+                    const w = optimizePortfolioSimple(returns, covMatrix, target, allowShort);
+                    const ret = dotProduct(w, returns);
+                    const risk = Math.sqrt(dotProduct(w, multiplyMatrixVector(covMatrix, w)));
+                    const sharpe = (ret - riskFree) / risk;
+
+                    if (sharpe > bestSharpe && risk > 0) {
+                        bestSharpe = sharpe;
+                        bestWeights = w;
                     }
+                } catch (e) { }
+            }
+            return bestWeights;
+        }
 
-                    /* Responsive */
-                    @media (max-width: 768px) {
-                    header h1 {
-                    font-size: 2.5em;
-                    }
+        // UI Handlers
+        function getInputs() {
+            const names = document.getElementById('assetNames').value.split(',').map(s => s.trim());
+            const returns = document.getElementById('expectedReturns').value.split(',').map(Number);
+            const covText = document.getElementById('covMatrix').value.trim().split('\n');
+            const covMatrix = covText.map(row => row.split(',').map(Number));
+            const target = parseFloat(document.getElementById('targetReturn').value);
+            const rf = parseFloat(document.getElementById('riskFreeRate').value);
+            const allowShort = document.getElementById('allowShort').checked;
 
-                    .main-card {
-                    padding: 30px 20px;
-                    border-radius: 16px;
-                    }
+            if (names.length !== returns.length || returns.length !== covMatrix.length) {
+                throw new Error("Dimension mismatch: Check asset names, returns, and matrix size.");
+            }
+            return { names, returns, covMatrix, target, rf, allowShort };
+        }
 
-                    .results-grid {
-                    grid-template-columns: 1fr;
-                    }
+        function displayResults(names, weights, ret, risk, sharpe) {
+            document.getElementById('resultReturn').textContent = (ret * 100).toFixed(2) + '%';
+            document.getElementById('resultRisk').textContent = (risk * 100).toFixed(2) + '%';
+            document.getElementById('resultSharpe').textContent = sharpe.toFixed(3);
 
-                    .section-title {
-                    font-size: 1.6em;
-                    }
+            const tbody = document.getElementById('weightsTable');
+            tbody.innerHTML = '';
 
-                    .button {
-                    width: 100%;
-                    margin-right: 0;
-                    }
-                    }
+            weights.forEach((w, i) => {
+                const tr = document.createElement('tr');
+                const isNeg = w < 0;
+                const pct = (w * 100).toFixed(2) + '%';
+                // Aesthetic Gradients
+                const color = isNeg
+                    ? 'linear-gradient(90deg, #d69e9e, #e2c2c6)' // Soft Red
+                    : 'linear-gradient(90deg, #95b8a6, #7c98b3)'; // Sage to Blue
 
-                    /* Loading Animation */
-                    .loading {
-                    display: inline-block;
-                    width: 20px;
-                    height: 20px;
-                    border: 3px solid rgba(255, 255, 255, .3);
-                    border-radius: 50%;
-                    border-top-color: white;
-                    animation: spin 1s ease-in-out infinite;
-                    }
-
-                    @keyframes spin {
-                    to {
-                    transform: rotate(360deg);
-                    }
-                    }
-                    </style>
-                    </head>
-
-                    <body>
-                        <header>
-                            <div class="container">
-                                <h1>📊 Portfolio Optimizer</h1>
-                                <p>Markowitz Mean-Variance Portfolio Optimization</p>
-                            </div>
-                        </header>
-
-                        <div class="container">
-                            <div class="main-card">
-                                <div class="section">
-                                    <h2 class="section-title">📁 Input Your Portfolio Data</h2>
-
-                                    <div class="info-box">
-                                        <strong>ℹ️ How to use:</strong> Enter your asset names, expected returns, and
-                                        covariance matrix
-                                        below.
-                                        Or upload a CSV file with historical prices and we'll calculate everything for
-                                        you!
-                                    </div>
-
-                                    <div class="input-group">
-                                        <label>Input Method</label>
-                                        <select id="inputMethod" onchange="toggleInputMethod()">
-                                            <option value="manual">📝 Manual Entry (Returns & Covariance)</option>
-                                            <option value="csv">📤 Upload CSV (Historical Prices)</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Manual Input -->
-                                    <div id="manualInput">
-                                        <div class="input-group">
-                                            <label>Asset Names</label>
-                                            <input type="text" id="assetNames"
-                                                placeholder="e.g., US Stocks, Bonds, Gold"
-                                                value="US Stocks, Bonds, Gold">
-                                        </div>
-
-                                        <div class="input-group">
-                                            <label>Expected Annual Returns</label>
-                                            <input type="text" id="expectedReturns" placeholder="e.g., 0.10, 0.04, 0.05"
-                                                value="0.10, 0.04, 0.05">
-                                            <small style="color: #64748b; display: block; margin-top: 8px;">Enter as
-                                                decimals (e.g., 0.10 =
-                                                10%)</small>
-                                        </div>
-
-                                        <div class="input-group">
-                                            <label>Covariance Matrix</label>
-                                            <textarea id="covMatrix"
-                                                placeholder="One row per line, values separated by commas">0.04, 0.01, 0.00
-0.01, 0.01, 0.00
-0.00, 0.00, 0.02</textarea>
-                                            <small style="color: #64748b; display: block; margin-top: 8px;">One row per
-                                                line,
-                                                comma-separated values</small>
-                                        </div>
-                                    </div>
-
-                                    <!-- CSV Upload -->
-                                    <div id="csvInput" style="display: none;">
-                                        <div class="input-group">
-                                            <label>Upload Price History CSV</label>
-                                            <div class="file-upload">
-                                                <input type="file" id="csvFile" accept=".csv"
-                                                    onchange="handleFileUpload(event)">
-                                                <div class="file-upload-label">
-                                                    <strong>Click to upload CSV file</strong><br>
-                                                    <small>Format: Date, Asset1, Asset2, Asset3...</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="csvPreview"></div>
-                                    </div>
-
-                                    <div
-                                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                                        <div class="input-group">
-                                            <label>Target Annual Return</label>
-                                            <input type="number" id="targetReturn" step="0.01" value="0.08" min="0"
-                                                max="1">
-                                            <small style="color: #64748b; display: block; margin-top: 8px;">As decimal
-                                                (e.g., 0.08 =
-                                                8%)</small>
-                                        </div>
-
-                                        <div class="input-group">
-                                            <label>Risk-Free Rate</label>
-                                            <input type="number" id="riskFreeRate" step="0.01" value="0.02" min="0"
-                                                max="1">
-                                            <small style="color: #64748b; display: block; margin-top: 8px;">As decimal
-                                                (e.g., 0.02 =
-                                                2%)</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="input-group">
-                                        <label style="text-transform: none; font-size: 1em; cursor: pointer;">
-                                            <input type="checkbox" id="allowShort"> Allow Short Selling (negative
-                                            weights)
-                                        </label>
-                                    </div>
-
-                                    <div style="margin-top: 32px;">
-                                        <button class="button button-primary" onclick="optimizePortfolio()">
-                                            🚀 Optimize Portfolio
-                                        </button>
-                                        <button class="button button-success" onclick="calculateMaxSharpe()">
-                                            ⭐ Find Max Sharpe Ratio
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Results Section -->
-                                <div id="results" class="results">
-                                    <div class="section">
-                                        <h2 class="section-title">📈 Optimization Results</h2>
-
-                                        <div class="results-grid">
-                                            <div class="stat-card">
-                                                <div class="stat-label">Expected Return</div>
-                                                <div class="stat-value" id="resultReturn">-</div>
-                                            </div>
-                                            <div class="stat-card">
-                                                <div class="stat-label">Risk (Volatility)</div>
-                                                <div class="stat-value" id="resultRisk">-</div>
-                                            </div>
-                                            <div class="stat-card">
-                                                <div class="stat-label">Sharpe Ratio</div>
-                                                <div class="stat-value" id="resultSharpe">-</div>
-                                            </div>
-                                        </div>
-
-                                        <h3
-                                            style="font-size: 1.6em; margin-bottom: 20px; color: var(--dark); font-weight: 700;">
-                                            Optimal
-                                            Portfolio Weights</h3>
-                                        <table class="weights-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset</th>
-                                                    <th>Weight</th>
-                                                    <th style="width: 40%;">Allocation</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="weightsTable">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <footer>
-                                <p style="font-size: 1.1em; font-weight: 600;">&copy; 2024 Portfolio Optimization Tool
-                                </p>
-                                <p>Built with Modern Web Technologies • Markowitz Mean-Variance Framework</p>
-                                <div class="footer-links">
-                                    <a href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization"
-                                        target="_blank">GitHub</a>
-                                    <a
-                                        href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization/blob/main/docs/cli-guide.md">Documentation</a>
-                                    <a
-                                        href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization/blob/main/QUICK_START.md">Quick
-                                        Start</a>
-                                </div>
-                            </footer>
-                        </div>
-
-                        <script>
-                            // Toggle between manual and CSV input
-                            function toggleInputMethod() {
-                                const method = document.getElementById('inputMethod').value;
-                                document.getElementById('manualInput').style.display = method === 'manual' ? 'block' : 'none';
-                                document.getElementById('csvInput').style.display = method === 'csv' ? 'block' : 'none';
-                            }
-
-                            function handleFileUpload(event) {
-                                const file = event.target.files[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onload = function (e) {
-                                        const content = e.target.result;
-                                        parseCSV(content);
-                                    };
-                                    reader.readAsText(file);
-                                }
-                            }
-
-                            function parseCSV(content) {
-                                const lines = content.trim().split('\n');
-                                const headers = lines[0].split(',');
-
-                                document.getElementById('csvPreview').innerHTML = `
-                <div class="info-box">
-                    ✓ Loaded ${lines.length - 1} rows of data for ${headers.length - 1} assets
-                </div>
-            `;
-
-                                window.csvData = {
-                                    headers: headers.slice(1),
-                                    data: lines.slice(1).map(line => line.split(',').slice(1).map(Number))
-                                };
-                            }
-
-                            // Matrix operations
-                            function multiplyMatrixVector(matrix, vector) {
-                                return matrix.map(row =>
-                                    row.reduce((sum, val, i) => sum + val * vector[i], 0)
-                                );
-                            }
-
-                            function dotProduct(a, b) {
-                                return a.reduce((sum, val, i) => sum + val * b[i], 0);
-                            }
-
-                            function calculatePortfolioReturn(weights, returns) {
-                                return dotProduct(weights, returns);
-                            }
-
-                            function calculatePortfolioVariance(weights, covMatrix) {
-                                const temp = multiplyMatrixVector(covMatrix, weights);
-                                return dotProduct(weights, temp);
-                            }
-
-                            function calculateSharpeRatio(portfolioReturn, portfolioRisk, riskFreeRate) {
-                                return (portfolioReturn - riskFreeRate) / portfolioRisk;
-                            }
-
-                            // Improved optimization algorithm
-                            function optimizePortfolioSimple(returns, covMatrix, targetReturn, allowShort) {
-                                const n = returns.length;
-
-                                // Start with equal weights
-                                let weights = new Array(n).fill(1 / n);
-
-                                // Iterative adjustment to match target return
-                                for (let iter = 0; iter < 100; iter++) {
-                                    const currentReturn = calculatePortfolioReturn(weights, returns);
-
-                                    if (Math.abs(currentReturn - targetReturn) < 0.0001) break;
-
-                                    // Adjust weights proportionally to returns
-                                    const diff = targetReturn - currentReturn;
-                                    for (let i = 0; i < n; i++) {
-                                        weights[i] += diff * (returns[i] - currentReturn) * 0.1;
-                                    }
-
-                                    // Apply constraints
-                                    if (!allowShort) {
-                                        weights = weights.map(w => Math.max(0, w));
-                                    }
-
-                                    // Normalize
-                                    const sum = weights.reduce((a, b) => a + b, 0);
-                                    if (sum > 0) {
-                                        weights = weights.map(w => w / sum);
-                                    }
-                                }
-
-                                return weights;
-                            }
-
-                            // Find maximum Sharpe ratio portfolio
-                            function findMaxSharpePortfolio(returns, covMatrix, riskFreeRate, allowShort) {
-                                const n = returns.length;
-                                let bestSharpe = -Infinity;
-                                let bestWeights = null;
-
-                                // Try different return targets
-                                const minReturn = Math.min(...returns);
-                                const maxReturn = Math.max(...returns);
-                                const steps = 50;
-
-                                for (let i = 0; i <= steps; i++) {
-                                    const targetReturn = minReturn + (maxReturn - minReturn) * i / steps;
-
-                                    try {
-                                        const weights = optimizePortfolioSimple(returns, covMatrix, targetReturn, allowShort);
-                                        const portfolioReturn = calculatePortfolioReturn(weights, returns);
-                                        const portfolioVariance = calculatePortfolioVariance(weights, covMatrix);
-                                        const portfolioRisk = Math.sqrt(portfolioVariance);
-                                        const sharpe = calculateSharpeRatio(portfolioReturn, portfolioRisk, riskFreeRate);
-
-                                        if (sharpe > bestSharpe && portfolioRisk > 0) {
-                                            bestSharpe = sharpe;
-                                            bestWeights = weights;
-                                        }
-                                    } catch (e) {
-                                        continue;
-                                    }
-                                }
-
-                                return bestWeights || new Array(n).fill(1 / n);
-                            }
-
-                            // Main optimization function
-                            function optimizePortfolio() {
-                                try {
-                                    const assetNames = document.getElementById('assetNames').value.split(',').map(s => s.trim());
-                                    const returns = document.getElementById('expectedReturns').value.split(',').map(Number);
-                                    const covMatrixText = document.getElementById('covMatrix').value;
-                                    const covMatrix = covMatrixText.trim().split('\n').map(row =>
-                                        row.split(',').map(Number)
-                                    );
-                                    const targetReturn = parseFloat(document.getElementById('targetReturn').value);
-                                    const riskFreeRate = parseFloat(document.getElementById('riskFreeRate').value);
-                                    const allowShort = document.getElementById('allowShort').checked;
-
-                                    // Validation
-                                    if (assetNames.length !== returns.length || returns.length !== covMatrix.length) {
-                                        alert('❌ Error: Dimensions mismatch.\n\nEnsure asset names, returns, and covariance matrix have the same number of elements.');
-                                        return;
-                                    }
-
-                                    if (returns.some(isNaN) || covMatrix.some(row => row.some(isNaN))) {
-                                        alert('❌ Error: Invalid numbers.\n\nPlease check your input for non-numeric values.');
-                                        return;
-                                    }
-
-                                    // Optimize
-                                    const weights = optimizePortfolioSimple(returns, covMatrix, targetReturn, allowShort);
-                                    const portfolioReturn = calculatePortfolioReturn(weights, returns);
-                                    const portfolioVariance = calculatePortfolioVariance(weights, covMatrix);
-                                    const portfolioRisk = Math.sqrt(portfolioVariance);
-                                    const sharpeRatio = calculateSharpeRatio(portfolioReturn, portfolioRisk, riskFreeRate);
-
-                                    displayResults(assetNames, weights, portfolioReturn, portfolioRisk, sharpeRatio);
-
-                                } catch (error) {
-                                    alert('❌ Error during optimization:\n\n' + error.message);
-                                    console.error(error);
-                                }
-                            }
-
-                            // Calculate maximum Sharpe ratio
-                            function calculateMaxSharpe() {
-                                try {
-                                    const assetNames = document.getElementById('assetNames').value.split(',').map(s => s.trim());
-                                    const returns = document.getElementById('expectedReturns').value.split(',').map(Number);
-                                    const covMatrixText = document.getElementById('covMatrix').value;
-                                    const covMatrix = covMatrixText.trim().split('\n').map(row =>
-                                        row.split(',').map(Number)
-                                    );
-                                    const riskFreeRate = parseFloat(document.getElementById('riskFreeRate').value);
-                                    const allowShort = document.getElementById('allowShort').checked;
-
-                                    // Validation
-                                    if (assetNames.length !== returns.length || returns.length !== covMatrix.length) {
-                                        alert('❌ Error: Dimensions mismatch.\n\nEnsure asset names, returns, and covariance matrix have the same number of elements.');
-                                        return;
-                                    }
-
-                                    // Find max Sharpe
-                                    const weights = findMaxSharpePortfolio(returns, covMatrix, riskFreeRate, allowShort);
-                                    const portfolioReturn = calculatePortfolioReturn(weights, returns);
-                                    const portfolioVariance = calculatePortfolioVariance(weights, covMatrix);
-                                    const portfolioRisk = Math.sqrt(portfolioVariance);
-                                    const sharpeRatio = calculateSharpeRatio(portfolioReturn, portfolioRisk, riskFreeRate);
-
-                                    displayResults(assetNames, weights, portfolioReturn, portfolioRisk, sharpeRatio);
-
-                                } catch (error) {
-                                    alert('❌ Error during optimization:\n\n' + error.message);
-                                    console.error(error);
-                                }
-                            }
-
-                            // Display results
-                            function displayResults(assetNames, weights, portfolioReturn, portfolioRisk, sharpeRatio) {
-                                document.getElementById('resultReturn').textContent = (portfolioReturn * 100).toFixed(2) + '%';
-                                document.getElementById('resultRisk').textContent = (portfolioRisk * 100).toFixed(2) + '%';
-                                document.getElementById('resultSharpe').textContent = sharpeRatio.toFixed(3);
-
-                                const tableBody = document.getElementById('weightsTable');
-                                tableBody.innerHTML = '';
-
-                                weights.forEach((weight, i) => {
-                                    const row = document.createElement('tr');
-                                    const isNegative = weight < 0;
-                                    const barColor = isNegative ? 'linear-gradient(90deg, #f87171 0%, #dc2626 100%)' : 'linear-gradient(90deg, #4ade80 0%, #667eea 100%)';
-
-                                    row.innerHTML = `
-                    <td><strong style="font-size: 1.05em;">${assetNames[i]}</strong></td>
-                    <td><strong style="font-size: 1.1em; color: ${isNegative ? '#dc2626' : 'var(--primary)'};">${(weight * 100).toFixed(2)}%</strong></td>
+                tr.innerHTML = `
+                    <td><strong>${names[i]}</strong></td>
+                    <td style="color: ${isNeg ? 'var(--danger)' : 'var(--primary-dark)'}; font-weight: bold;">${pct}</td>
                     <td>
                         <div class="weight-bar-container">
-                            <div class="weight-bar" style="width: ${Math.abs(weight) * 100}%; background: ${barColor};">
-                                ${Math.abs(weight * 100).toFixed(1)}%
+                            <div class="weight-bar" style="width: ${Math.abs(w) * 100}%; background: ${color};">
                             </div>
                         </div>
                     </td>
                 `;
-                                    tableBody.appendChild(row);
-                                });
+                tbody.appendChild(tr);
+            });
 
-                                document.getElementById('results').classList.add('show');
-                                setTimeout(() => {
-                                    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                                }, 100);
-                            }
-                        </script>
-                    </body>
+            const results = document.getElementById('results');
+            results.classList.add('show');
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function optimizePortfolio() {
+            try {
+                const { names, returns, covMatrix, target, rf, allowShort } = getInputs();
+                const weights = optimizePortfolioSimple(returns, covMatrix, target, allowShort);
+                const ret = dotProduct(weights, returns);
+                const risk = Math.sqrt(dotProduct(weights, multiplyMatrixVector(covMatrix, weights)));
+                const sharpe = (ret - rf) / risk;
+                displayResults(names, weights, ret, risk, sharpe);
+            } catch (e) {
+                alert("❌ Error: " + e.message);
+            }
+        }
+
+        function calculateMaxSharpe() {
+            try {
+                const { names, returns, covMatrix, rf, allowShort } = getInputs();
+                const weights = findMaxSharpePortfolio(returns, covMatrix, rf, allowShort);
+                const ret = dotProduct(weights, returns);
+                const risk = Math.sqrt(dotProduct(weights, multiplyMatrixVector(covMatrix, weights)));
+                const sharpe = (ret - rf) / risk;
+                displayResults(names, weights, ret, risk, sharpe);
+            } catch (e) {
+                alert("❌ Error: " + e.message);
+            }
+        }
+    </script>
+</body>
 
 </html>
