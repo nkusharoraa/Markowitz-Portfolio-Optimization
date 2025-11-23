@@ -11,7 +11,7 @@ git add .
 git commit -m "Initial commit with GitHub Pages support"
 
 # Create GitHub repository and push
-git remote add origin https://github.com/yourusername/portfolio-optimization.git
+git remote add origin https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization.git
 git branch -M main
 git push -u origin main
 ```
@@ -36,7 +36,7 @@ git push -u origin main
 
 Your site will be live at:
 ```
-https://yourusername.github.io/portfolio-optimization/
+https://nkusharoraa.github.io/Markowitz-Portfolio-Optimization/
 ```
 
 ---
@@ -84,7 +84,7 @@ docs/
 Edit `docs/index.html` and update the footer links:
 
 ```html
-<a href="https://github.com/YOURUSERNAME/portfolio-optimization">GitHub</a>
+<a href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization">GitHub</a>
 ```
 
 ### Change Color Scheme
@@ -208,7 +208,7 @@ Remember: The web version uses simplified calculations. For precise results, use
    ```
    Type: CNAME
    Host: portfolio
-   Value: yourusername.github.io
+   Value: nkusharoraa.github.io
    ```
 
 3. Enable HTTPS in GitHub Pages settings

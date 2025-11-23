@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Code style](https://img.shields.io/badge/Code%20style-Professional-brightgreen)]()
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success)]()
-[![GitHub Pages](https://img.shields.io/badge/Demo-Live-orange)](https://yourusername.github.io/portfolio-optimization/)
+[![GitHub Pages](https://img.shields.io/badge/Demo-Live-orange)](https://nkusharoraa.github.io/Markowitz-Portfolio-Optimization/)
 
 **Clean** • **Modular** • **User-Friendly** • **Beautiful Visualizations** • **Web App Available**
 
@@ -32,7 +32,7 @@ python optimize.py your_prices.csv
 ```
 
 **🌐 Web App (No Installation):**
-Visit: [portfolio-optimization.github.io](https://yourusername.github.io/portfolio-optimization/)
+Visit: [Markowitz Portfolio Optimization](https://nkusharoraa.github.io/Markowitz-Portfolio-Optimization/)
 
 Get professional-quality:
 - ✨ **Optimal portfolio weights** minimizing risk for your target return
@@ -46,7 +46,7 @@ Get professional-quality:
 
 ### 🌐 Option A: Web App (Fastest - No Installation!)
 
-1. Visit **[Web Application](https://yourusername.github.io/portfolio-optimization/)**
+1. Visit **[Web Application](https://nkusharoraa.github.io/Markowitz-Portfolio-Optimization/)**
 2. Enter your asset data or upload CSV
 3. Click "Optimize Portfolio"
 4. Get instant results!
