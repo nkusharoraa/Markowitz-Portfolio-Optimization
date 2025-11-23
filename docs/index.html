@@ -463,130 +463,425 @@
             <div style="margin-top: 10px;">
                 <a href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization" target="_blank">GitHub</a>
                 <a href="#">Documentation</a>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        // Toggle Input
-        function toggleInputMethod() {
-            const method = document.getElementById('inputMethod').value;
-            document.getElementById('manualInput').style.display = method === 'manual' ? 'block' : 'none';
-            document.getElementById('csvInput').style.display = method === 'csv' ? 'block' : 'none';
-        }
-
-        // CSV Handling
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    parseCSV(e.target.result);
-                };
-                reader.readAsText(file);
-            }
-        }
-
-        function parseCSV(content) {
-            const lines = content.trim().split('\n');
-            const headers = lines[0].split(',');
-            document.getElementById('csvPreview').innerHTML = `
-                <div class="info-box" style="border-color: var(--success);">
-                    ✅ Loaded ${lines.length - 1} rows for ${headers.length - 1} assets
-                </div>`;
-            // In a real app, we'd calculate covariance here
-        }
-
-        // Math Helpers
-        function dotProduct(a, b) {
-            return a.reduce((sum, val, i) => sum + val * b[i], 0);
-        }
-
-        function multiplyMatrixVector(matrix, vector) {
-            return matrix.map(row => row.reduce((sum, val, i) => sum + val * vector[i], 0));
-        }
-
-        // Core Optimization Logic
-        function optimizePortfolioSimple(returns, covMatrix, targetReturn, allowShort) {
-            const n = returns.length;
-            let weights = new Array(n).fill(1 / n); // Start equal
-
-            for (let iter = 0; iter < 100; iter++) {
-                const currentRet = dotProduct(weights, returns);
-                if (Math.abs(currentRet - targetReturn) < 0.0001) break;
-
-                const diff = targetReturn - currentRet;
-                for (let i = 0; i < n; i++) {
-                    weights[i] += diff * (returns[i] - currentRet) * 0.1;
+                .weights-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                background: white;
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
                 }
 
-                if (!allowShort) weights = weights.map(w => Math.max(0, w));
+                .weights-table th {
+                background: var(--primary);
+                color: white;
+                padding: 20px;
+                text-align: left;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.9em;
+                letter-spacing: 1px;
+                }
 
-                const sum = weights.reduce((a, b) => a + b, 0);
-                if (sum > 0) weights = weights.map(w => w / sum);
-            }
-            return weights;
-        }
+                .weights-table td {
+                padding: 20px;
+                border-bottom: 1px solid var(--light);
+                }
 
-        function findMaxSharpePortfolio(returns, covMatrix, riskFree, allowShort) {
-            const n = returns.length;
-            let bestSharpe = -Infinity;
-            let bestWeights = new Array(n).fill(1 / n);
+                .weight-bar-container {
+                background: #f0f2f5;
+                border-radius: 8px;
+                height: 24px;
+                overflow: hidden;
+                }
 
-            const minRet = Math.min(...returns);
-            const maxRet = Math.max(...returns);
+                .weight-bar {
+                height: 100%;
+                border-radius: 8px;
+                transition: width 1s ease;
+                display: flex;
+                align-items: center;
+                padding-left: 10px;
+                font-size: 0.8em;
+                color: white;
+                font-weight: 600;
+                }
 
-            for (let i = 0; i <= 50; i++) {
-                const target = minRet + (maxRet - minRet) * (i / 50);
-                try {
-                    const w = optimizePortfolioSimple(returns, covMatrix, target, allowShort);
-                    const ret = dotProduct(w, returns);
-                    const risk = Math.sqrt(dotProduct(w, multiplyMatrixVector(covMatrix, w)));
-                    const sharpe = (ret - riskFree) / risk;
+                /* Footer */
+                footer {
+                text-align: center;
+                margin-top: 60px;
+                color: var(--primary-dark);
+                opacity: 0.8;
+                }
 
-                    if (sharpe > bestSharpe && risk > 0) {
-                        bestSharpe = sharpe;
-                        bestWeights = w;
-                    }
-                } catch (e) { }
-            }
-            return bestWeights;
-        }
+                footer a {
+                color: var(--primary-dark);
+                text-decoration: none;
+                margin: 0 15px;
+                font-weight: 500;
+                border-bottom: 1px solid transparent;
+                transition: all 0.3s;
+                }
 
-        // UI Handlers
-        function getInputs() {
-            const names = document.getElementById('assetNames').value.split(',').map(s => s.trim());
-            const returns = document.getElementById('expectedReturns').value.split(',').map(Number);
-            const covText = document.getElementById('covMatrix').value.trim().split('\n');
-            const covMatrix = covText.map(row => row.split(',').map(Number));
-            const target = parseFloat(document.getElementById('targetReturn').value);
-            const rf = parseFloat(document.getElementById('riskFreeRate').value);
-            const allowShort = document.getElementById('allowShort').checked;
+                footer a:hover {
+                border-bottom-color: var(--primary-dark);
+                }
+                </style>
+                </head>
 
-            if (names.length !== returns.length || returns.length !== covMatrix.length) {
-                throw new Error("Dimension mismatch: Check asset names, returns, and matrix size.");
-            }
-            return { names, returns, covMatrix, target, rf, allowShort };
-        }
+                <body>
+                    <header>
+                        <div class="container">
+                            <h1>Portfolio Optimizer</h1>
+                            <p>Efficient Frontier & Mean-Variance Optimization</p>
+                        </div>
+                    </header>
 
-        function displayResults(names, weights, ret, risk, sharpe) {
-            document.getElementById('resultReturn').textContent = (ret * 100).toFixed(2) + '%';
-            document.getElementById('resultRisk').textContent = (risk * 100).toFixed(2) + '%';
-            document.getElementById('resultSharpe').textContent = sharpe.toFixed(3);
+                    <div class="container">
+                        <div class="main-card">
+                            <div class="section">
+                                <h2 class="section-title">Input Data</h2>
 
-            const tbody = document.getElementById('weightsTable');
-            tbody.innerHTML = '';
+                                <div class="info-box">
+                                    <strong>ℹ️ Getting Started:</strong> Enter your asset details below or upload a CSV
+                                    file.
+                                    We'll calculate the optimal allocation to minimize risk or maximize returns.
+                                </div>
 
-            weights.forEach((w, i) => {
-                const tr = document.createElement('tr');
-                const isNeg = w < 0;
-                const pct = (w * 100).toFixed(2) + '%';
-                // Aesthetic Gradients
-                const color = isNeg
-                    ? 'linear-gradient(90deg, #d69e9e, #e2c2c6)' // Soft Red
-                    : 'linear-gradient(90deg, #95b8a6, #7c98b3)'; // Sage to Blue
+                                <div class="input-group">
+                                    <label>Data Source</label>
+                                    <select id="inputMethod" onchange="toggleInputMethod()">
+                                        <option value="manual">📝 Manual Entry</option>
+                                        <option value="csv">📤 Upload Price CSV</option>
+                                    </select>
+                                </div>
 
-                tr.innerHTML = `
+                                <!-- Manual Input -->
+                                <div id="manualInput">
+                                    <div class="input-group">
+                                        <label>Asset Names (comma separated)</label>
+                                        <input type="text" id="assetNames" value="US Stocks, Bonds, Gold, Real Estate">
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label>Expected Annual Returns (decimals)</label>
+                                        <input type="text" id="expectedReturns" value="0.10, 0.04, 0.05, 0.07">
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label>Covariance Matrix (rows separated by newlines)</label>
+                                        <textarea id="covMatrix">0.04, 0.01, 0.00, 0.02
+0.01, 0.01, 0.01, 0.01
+0.00, 0.00, 0.02, 0.00
+0.02, 0.01, 0.00, 0.03</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- CSV Upload -->
+                                <div id="csvInput" style="display: none;">
+                                    <div class="input-group">
+                                        <label>Upload Historical Prices</label>
+                                        <label class="file-upload-label">
+                                            <input type="file" id="csvFile" accept=".csv"
+                                                onchange="handleFileUpload(event)" style="display: none;">
+                                            <span style="font-size: 2em; display: block; margin-bottom: 10px;">📎</span>
+                                            <strong>Click to Select CSV</strong>
+                                        </label>
+                                    </div>
+                                    <div id="csvPreview"></div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                    <div class="input-group">
+                                        <label>Target Return</label>
+                                        <input type="number" id="targetReturn" step="0.01" value="0.08">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Risk-Free Rate</label>
+                                        <input type="number" id="riskFreeRate" step="0.01" value="0.02">
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label
+                                        style="text-transform: none; cursor: pointer; display: flex; align-items: center;">
+                                        <input type="checkbox" id="allowShort" style="width: auto; margin-right: 10px;">
+                                        Allow Short Selling (Negative Weights)
+                                    </label>
+                                </div>
+
+                                <div style="margin-top: 30px;">
+                                    <button class="button button-primary" onclick="optimizePortfolio()">
+                                        🚀 Optimize Portfolio
+                                    </button>
+                                    <button class="button button-success" onclick="calculateMaxSharpe()">
+                                        ⭐ Find Max Sharpe Ratio
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Results -->
+                            <div id="results" class="results">
+                                <h2 class="section-title">Optimization Results</h2>
+
+                                <div class="results-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-label">Expected Return</div>
+                                        <div class="stat-value" id="resultReturn">-</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Risk (Volatility)</div>
+                                        <div class="stat-value" id="resultRisk">-</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Sharpe Ratio</div>
+                                        <div class="stat-value" id="resultSharpe">-</div>
+                                    </div>
+                                </div>
+
+                                <h3 style="margin-bottom: 20px; color: var(--primary-dark);">Optimal Allocation</h3>
+                                <table class="weights-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset</th>
+                                            <th>Weight</th>
+                                            <th style="width: 50%;">Visual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="weightsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <footer>
+                            <p>&copy; 2024 Portfolio Optimizer</p>
+                            <div style="margin-top: 10px;">
+                                <a href="https://github.com/nkusharoraa/Markowitz-Portfolio-Optimization"
+                                    target="_blank">GitHub</a>
+                                <a href="#">Documentation</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <script>
+                        // Toggle Input
+                        function toggleInputMethod() {
+                            const method = document.getElementById('inputMethod').value;
+                            document.getElementById('manualInput').style.display = method === 'manual' ? 'block' : 'none';
+                            document.getElementById('csvInput').style.display = method === 'csv' ? 'block' : 'none';
+                        }
+
+                        // Global variables to store CSV data
+                        let csvAssetNames = [];
+                        let csvExpectedReturns = [];
+                        let csvCovMatrix = [];
+
+                        // CSV Handling
+                        function handleFileUpload(event) {
+                            const file = event.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    try {
+                                        parseCSV(e.target.result);
+                                    } catch (error) {
+                                        alert("Error parsing CSV: " + error.message);
+                                    }
+                                };
+                                reader.readAsText(file);
+                            }
+                        }
+
+                        function parseCSV(content) {
+                            const lines = content.trim().split('\n');
+                            if (lines.length < 2) throw new Error("CSV must have at least a header and one row of data.");
+
+                            // 1. Parse Header
+                            const headers = lines[0].split(',').map(h => h.trim());
+                            // Assume first column is Date if it looks like "Date" or "Time", otherwise assume all are assets
+                            let startIndex = 0;
+                            if (headers[0].toLowerCase().includes('date') || headers[0].toLowerCase().includes('time')) {
+                                startIndex = 1;
+                            }
+                            csvAssetNames = headers.slice(startIndex);
+
+                            // 2. Parse Data
+                            const prices = [];
+                            for (let i = 1; i < lines.length; i++) {
+                                const row = lines[i].split(',');
+                                if (row.length !== headers.length) continue; // Skip malformed rows
+                                const rowPrices = row.slice(startIndex).map(parseFloat);
+                                if (rowPrices.some(isNaN)) continue; // Skip rows with invalid numbers
+                                prices.push(rowPrices);
+                            }
+
+                            if (prices.length < 2) throw new Error("Need at least 2 rows of price data to calculate returns.");
+
+                            // 3. Calculate Returns
+                            // r_t = (P_t - P_{t-1}) / P_{t-1}
+                            const returns = [];
+                            for (let i = 1; i < prices.length; i++) {
+                                const rowReturns = [];
+                                for (let j = 0; j < csvAssetNames.length; j++) {
+                                    const r = (prices[i][j] - prices[i - 1][j]) / prices[i - 1][j];
+                                    rowReturns.push(r);
+                                }
+                                returns.push(rowReturns);
+                            }
+
+                            // 4. Calculate Expected Returns (Mean)
+                            const numAssets = csvAssetNames.length;
+                            const numPeriods = returns.length;
+
+                            csvExpectedReturns = new Array(numAssets).fill(0);
+                            for (let j = 0; j < numAssets; j++) {
+                                let sum = 0;
+                                for (let i = 0; i < numPeriods; i++) {
+                                    sum += returns[i][j];
+                                }
+                                csvExpectedReturns[j] = (sum / numPeriods) * 252; // Annualize
+                            }
+
+                            // 5. Calculate Covariance Matrix
+                            csvCovMatrix = Array(numAssets).fill().map(() => Array(numAssets).fill(0));
+
+                            // First calculate means for covariance formula (non-annualized for calculation)
+                            const means = new Array(numAssets).fill(0);
+                            for (let j = 0; j < numAssets; j++) {
+                                let sum = 0;
+                                for (let i = 0; i < numPeriods; i++) {
+                                    sum += returns[i][j];
+                                }
+                                means[j] = sum / numPeriods;
+                            }
+
+                            for (let j = 0; j < numAssets; j++) {
+                                for (let k = 0; k < numAssets; k++) {
+                                    let sumSqDiff = 0;
+                                    for (let i = 0; i < numPeriods; i++) {
+                                        sumSqDiff += (returns[i][j] - means[j]) * (returns[i][k] - means[k]);
+                                    }
+                                    csvCovMatrix[j][k] = (sumSqDiff / (numPeriods - 1)) * 252; // Sample covariance, annualized
+                                }
+                            }
+
+                            document.getElementById('csvPreview').innerHTML = `
+                <div class="info-box" style="border-color: var(--success);">
+                    ✅ Successfully processed ${prices.length} rows.<br>
+                    <strong>Assets:</strong> ${csvAssetNames.join(', ')}<br>
+                    <strong>Est. Annual Returns:</strong> ${csvExpectedReturns.map(r => (r * 100).toFixed(1) + '%').join(', ')}
+                </div>`;
+                        }
+
+                        // Math Helpers
+                        function dotProduct(a, b) {
+                            return a.reduce((sum, val, i) => sum + val * b[i], 0);
+                        }
+
+                        function multiplyMatrixVector(matrix, vector) {
+                            return matrix.map(row => row.reduce((sum, val, i) => sum + val * vector[i], 0));
+                        }
+
+                        // Core Optimization Logic
+                        function optimizePortfolioSimple(returns, covMatrix, targetReturn, allowShort) {
+                            const n = returns.length;
+                            let weights = new Array(n).fill(1 / n); // Start equal
+
+                            for (let iter = 0; iter < 100; iter++) {
+                                const currentRet = dotProduct(weights, returns);
+                                if (Math.abs(currentRet - targetReturn) < 0.0001) break;
+
+                                const diff = targetReturn - currentRet;
+                                for (let i = 0; i < n; i++) {
+                                    weights[i] += diff * (returns[i] - currentRet) * 0.1;
+                                }
+
+                                if (!allowShort) weights = weights.map(w => Math.max(0, w));
+
+                                const sum = weights.reduce((a, b) => a + b, 0);
+                                if (sum > 0) weights = weights.map(w => w / sum);
+                            }
+                            return weights;
+                        }
+
+                        function findMaxSharpePortfolio(returns, covMatrix, riskFree, allowShort) {
+                            const n = returns.length;
+                            let bestSharpe = -Infinity;
+                            let bestWeights = new Array(n).fill(1 / n);
+
+                            const minRet = Math.min(...returns);
+                            const maxRet = Math.max(...returns);
+
+                            for (let i = 0; i <= 50; i++) {
+                                const target = minRet + (maxRet - minRet) * (i / 50);
+                                try {
+                                    const w = optimizePortfolioSimple(returns, covMatrix, target, allowShort);
+                                    const ret = dotProduct(w, returns);
+                                    const risk = Math.sqrt(dotProduct(w, multiplyMatrixVector(covMatrix, w)));
+                                    const sharpe = (ret - riskFree) / risk;
+
+                                    if (sharpe > bestSharpe && risk > 0) {
+                                        bestSharpe = sharpe;
+                                        bestWeights = w;
+                                    }
+                                } catch (e) { }
+                            }
+                            return bestWeights;
+                        }
+
+                        // UI Handlers
+                        function getInputs() {
+                            const method = document.getElementById('inputMethod').value;
+                            const target = parseFloat(document.getElementById('targetReturn').value);
+                            const rf = parseFloat(document.getElementById('riskFreeRate').value);
+                            const allowShort = document.getElementById('allowShort').checked;
+
+                            if (method === 'csv') {
+                                if (csvAssetNames.length === 0) {
+                                    throw new Error("Please upload a valid CSV file first.");
+                                }
+                                return {
+                                    names: csvAssetNames,
+                                    returns: csvExpectedReturns,
+                                    covMatrix: csvCovMatrix,
+                                    target,
+                                    rf,
+                                    allowShort
+                                };
+                            }
+
+                            // Manual Mode
+                            const names = document.getElementById('assetNames').value.split(',').map(s => s.trim());
+                            const returns = document.getElementById('expectedReturns').value.split(',').map(Number);
+                            const covText = document.getElementById('covMatrix').value.trim().split('\n');
+                            const covMatrix = covText.map(row => row.split(',').map(Number));
+
+                            if (names.length !== returns.length || returns.length !== covMatrix.length) {
+                                throw new Error("Dimension mismatch: Check asset names, returns, and matrix size.");
+                            }
+                            return { names, returns, covMatrix, target, rf, allowShort };
+                        }
+
+                        function displayResults(names, weights, ret, risk, sharpe) {
+                            document.getElementById('resultReturn').textContent = (ret * 100).toFixed(2) + '%';
+                            document.getElementById('resultRisk').textContent = (risk * 100).toFixed(2) + '%';
+                            document.getElementById('resultSharpe').textContent = sharpe.toFixed(3);
+
+                            const tbody = document.getElementById('weightsTable');
+                            tbody.innerHTML = '';
+
+                            weights.forEach((w, i) => {
+                                const tr = document.createElement('tr');
+                                const isNeg = w < 0;
+                                const pct = (w * 100).toFixed(2) + '%';
+                                // Aesthetic Gradients
+                                const color = isNeg
+                                    ? 'linear-gradient(90deg, #d69e9e, #e2c2c6)' // Soft Red
+                                    : 'linear-gradient(90deg, #95b8a6, #7c98b3)'; // Sage to Blue
+
+                                tr.innerHTML = `
                     <td><strong>${names[i]}</strong></td>
                     <td style="color: ${isNeg ? 'var(--danger)' : 'var(--primary-dark)'}; font-weight: bold;">${pct}</td>
                     <td>
@@ -596,40 +891,40 @@
                         </div>
                     </td>
                 `;
-                tbody.appendChild(tr);
-            });
+                                tbody.appendChild(tr);
+                            });
 
-            const results = document.getElementById('results');
-            results.classList.add('show');
-            results.scrollIntoView({ behavior: 'smooth' });
-        }
+                            const results = document.getElementById('results');
+                            results.classList.add('show');
+                            results.scrollIntoView({ behavior: 'smooth' });
+                        }
 
-        function optimizePortfolio() {
-            try {
-                const { names, returns, covMatrix, target, rf, allowShort } = getInputs();
-                const weights = optimizePortfolioSimple(returns, covMatrix, target, allowShort);
-                const ret = dotProduct(weights, returns);
-                const risk = Math.sqrt(dotProduct(weights, multiplyMatrixVector(covMatrix, weights)));
-                const sharpe = (ret - rf) / risk;
-                displayResults(names, weights, ret, risk, sharpe);
-            } catch (e) {
-                alert("❌ Error: " + e.message);
-            }
-        }
+                        function optimizePortfolio() {
+                            try {
+                                const { names, returns, covMatrix, target, rf, allowShort } = getInputs();
+                                const weights = optimizePortfolioSimple(returns, covMatrix, target, allowShort);
+                                const ret = dotProduct(weights, returns);
+                                const risk = Math.sqrt(dotProduct(weights, multiplyMatrixVector(covMatrix, weights)));
+                                const sharpe = (ret - rf) / risk;
+                                displayResults(names, weights, ret, risk, sharpe);
+                            } catch (e) {
+                                alert("❌ Error: " + e.message);
+                            }
+                        }
 
-        function calculateMaxSharpe() {
-            try {
-                const { names, returns, covMatrix, rf, allowShort } = getInputs();
-                const weights = findMaxSharpePortfolio(returns, covMatrix, rf, allowShort);
-                const ret = dotProduct(weights, returns);
-                const risk = Math.sqrt(dotProduct(weights, multiplyMatrixVector(covMatrix, weights)));
-                const sharpe = (ret - rf) / risk;
-                displayResults(names, weights, ret, risk, sharpe);
-            } catch (e) {
-                alert("❌ Error: " + e.message);
-            }
-        }
-    </script>
-</body>
+                        function calculateMaxSharpe() {
+                            try {
+                                const { names, returns, covMatrix, rf, allowShort } = getInputs();
+                                const weights = findMaxSharpePortfolio(returns, covMatrix, rf, allowShort);
+                                const ret = dotProduct(weights, returns);
+                                const risk = Math.sqrt(dotProduct(weights, multiplyMatrixVector(covMatrix, weights)));
+                                const sharpe = (ret - rf) / risk;
+                                displayResults(names, weights, ret, risk, sharpe);
+                            } catch (e) {
+                                alert("❌ Error: " + e.message);
+                            }
+                        }
+                    </script>
+                </body>
 
 </html>
