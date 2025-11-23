@@ -1,0 +1,39 @@
+================================================================================
+PORTFOLIO OPTIMIZATION RESULTS
+================================================================================
+
+Source: examples\data\sample_prices.csv
+Data frequency: monthly
+Risk-free rate: 2.00%
+Short selling: Not allowed
+
+--------------------------------------------------------------------------------
+OPTIMAL PORTFOLIO FOR TARGET RETURN
+--------------------------------------------------------------------------------
+Target Return: 15.00%
+
+Weights:
+  US_Stocks              0.00%
+  Intl_Stocks            0.00%
+  US_Bonds               4.07%
+  REITs                 37.44%
+  Gold                  58.50%
+
+Expected Return:   15.00%
+Risk (Std Dev):     4.99%
+Sharpe Ratio:      2.608
+
+--------------------------------------------------------------------------------
+MAXIMUM SHARPE RATIO PORTFOLIO
+--------------------------------------------------------------------------------
+
+Weights:
+  US_Stocks             -0.00%
+  Intl_Stocks           -0.00%
+  US_Bonds              67.50%
+  REITs                 13.48%
+  Gold                  19.03%
+
+Expected Return:    7.69%
+Risk (Std Dev):     1.88%
+Sharpe Ratio:      3.035

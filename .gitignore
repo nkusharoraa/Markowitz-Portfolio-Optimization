@@ -1,4 +1,40 @@
-/correlation_matrix.png
-/efficient_frontier_no_short.png
-/efficient_frontier_with_short.png
-/venv
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Output directories
+output/
+test_output/
+examples/output/
+*.png
+*.jpg
+*.json
+!examples/data/*.json
+!package.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Distribution
+dist/
+build/
+*.egg-info/

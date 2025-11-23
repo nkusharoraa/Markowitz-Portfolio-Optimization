@@ -9,5 +9,8 @@ cvxpy>=1.4.0
 # Visualization
 matplotlib>=3.7.0
 
+# CLI enhancement
+colorama>=0.4.6
+
 # Optional: for better numerical stability
 pandas>=2.0.0

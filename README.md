@@ -1,300 +1,501 @@
-# Markowitz Portfolio Optimization
+<div align="center">
 
-A complete, production-quality Python implementation of the **Markowitz Mean-Variance Portfolio Optimization** framework.
+# 📊 Markowitz Portfolio Optimization
 
-## 📋 Features
+### *Professional Mean-Variance Portfolio Optimization in Python*
 
-✅ **Portfolio Metrics**
-- Expected return calculation
-- Portfolio variance and risk (standard deviation)
-- Sharpe ratio computation
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg?logo=python&logoColor=white)](https://www.python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Code style](https://img.shields.io/badge/Code%20style-Professional-brightgreen)]()
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success)]()
 
-✅ **Optimization Algorithms**
-- Minimize variance for target return
-- No short selling constraint option
-- Short selling allowed option
-- Maximum Sharpe ratio optimization
+**Clean** • **Modular** • **User-Friendly** • **Beautiful Visualizations**
 
-✅ **Efficient Frontier**
-- Complete frontier computation
-- Publication-quality visualization
-- Individual asset plotting
-- Maximum Sharpe ratio highlighting
-
-✅ **Visualization Tools**
-- Correlation matrix heatmap
-- Covariance matrix heatmap
-- Professional matplotlib charts
-
-✅ **Production Quality**
-- Type hints throughout
-- Comprehensive docstrings
-- Extensive inline comments
-- Error handling
-- Working examples
+[Quick Start](#-quick-start) •
+[Features](#-features) •
+[Documentation](#-documentation) •
+[Examples](#-examples)
 
 ---
 
-## 🚀 Quick Start
+</div>
 
-### 1. Setup Virtual Environment
+## 🎯 What This Does
 
-Run the automated setup script (one-time setup):
-
-```bash
-.\setup_env.bat
-```
-
-This will:
-- Create a Python virtual environment
-- Install all required dependencies (numpy, scipy, cvxpy, matplotlib, pandas)
-- Prepare the environment for running the optimization
-
-### 2. Run the Example
+Transform your **CSV price data** into **optimized investment portfolios** with just one command:
 
 ```bash
-# Activate the virtual environment
-venv\Scripts\activate
-
-# Run the portfolio optimization script
-python markowitz_portfolio.py
+python optimize.py your_prices.csv
 ```
 
-### 3. View Results
+Get professional-quality:
+- ✨ **Optimal portfolio weights** minimizing risk for your target return
+- 📈 **Beautiful visualizations** (efficient frontier, correlation matrices)
+- 📊 **Maximum Sharpe ratio** portfolios
+- 💾 **Complete analysis reports** ready for presentation
 
-The script will:
-- Display detailed portfolio statistics in the console
-- Generate three PNG visualization files:
-  - `correlation_matrix.png` - Asset correlation heatmap
-  - `efficient_frontier_no_short.png` - Efficient frontier without short selling
-  - `efficient_frontier_with_short.png` - Efficient frontier with short selling allowed
-- Show interactive matplotlib plots (close windows to exit)
+---
+
+## ⚡ Quick Start
+
+### 1️⃣ Setup (One-Time)
+
+```bash
+git clone <repository>
+cd "Markowitz Portfolio Optimization"
+.\setup_env.bat  # Creates virtual environment & installs dependencies
+```
+
+### 2️⃣ Run Optimization
+
+**Option A: Use Your Own Price Data**
+```bash
+python optimize.py your_prices.csv
+```
+
+**Option B: Try the Example**
+```bash
+python optimize.py examples/data/sample_prices.csv --auto
+```
+
+**Option C: Advanced Usage**
+```bash
+python optimize.py prices.csv --target 0.12 --short --save-data
+```
+
+### 3️⃣ View Results
+
+All outputs saved to `output/` folder:
+- 🖼️ `efficient_frontier.png` - Professional visualization
+- 🔢 `correlation_matrix.png` - Asset relationships  
+- 📄 `optimization_results.txt` - Complete analysis
+- 💾 `estimated_data.json` - Reusable parameters (optional)
+
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎨 **Beautiful Visualizations**
+- Modern color schemes
+- Professional typography
+- Publication-ready plots
+- Accessible color palettes
+- Clean, minimalist design
+
+</td>
+<td width="50%">
+
+### 🧮 **Comprehensive Analytics**
+- Expected returns calculation
+- Covariance matrix estimation
+- Efficient frontier generation
+- Sharpe ratio optimization
+- Risk-return trade-off analysis
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🛠️ **Easy to Use**
+- Simple CLI tool
+- Interactive prompts
+- Auto-detects data frequency
+- Helpful error messages
+- Step-by-step guidance
+
+</td>
+<td>
+
+### 📦 **Modular Architecture**
+- Clean code structure
+- Importable as library
+- Well-documented API
+- Type hints throughout
+- Professional standards
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Three Ways to Use
+
+### Method 1: CLI Tool (Easiest!)
+
+Perfect for quick analysis:
+
+```bash
+python optimize.py prices.csv
+```
+
+**Supports:**
+- ✅ Interactive mode (prompts for options)
+- ✅ Automatic mode (`--auto` flag)
+- ✅ Custom target returns (`--target 0.10`)
+- ✅ Short selling (`--short` flag)
+- ✅ Custom output location (`--output results/`)
+
+📖 **[Complete CLI Guide](CLI_GUIDE.md)**
+
+---
+
+### Method 2: Python Scripts
+
+Ready-to-run examples in `examples/` folder:
+
+```bash
+cd examples
+python 01_basic_optimization.py
+python 02_efficient_frontier.py  
+python 03_max_sharpe.py
+```
+
+Each script demonstrates different aspects of portfolio optimization.
+
+---
+
+### Method 3: Import as Library
+
+Use in your own Python code:
+
+```python
+from portfolio_optimization import (
+    optimize_portfolio,
+    plot_efficient_frontier
+)
+
+# Optimize
+result = optimize_portfolio(
+    returns, cov_matrix,
+    target_return=0.10
+)
+
+# Visualize
+plot_efficient_frontier(
+    returns, cov_matrix,
+    asset_names=['Stock', 'Bond', 'Gold']
+)
+```
+
+📖 **[API Documentation](#-api-reference)**
+
+---
+
+## 📂 Project Structure
+
+```
+📁 Markowitz Portfolio Optimization/
+│
+├── 📁 portfolio_optimization/    # Core library
+│   ├── metrics.py               # Portfolio calculations
+│   ├── optimization.py          # Optimization algorithms
+│   ├── frontier.py              # Efficient frontier
+│   ├── visualization.py         # Beautiful plots ✨
+│   └── data_utils.py            # Parameter estimation
+│
+├── 📁 examples/                 # Example scripts & data
+│   ├── 📁 data/                 # Sample datasets
+│   │   ├── sample_prices.csv   # Example price history
+│   │   ├── assets_5class.json  # 5-asset portfolio
+│   │   └── assets_tech.json    # Tech sector portfolio
+│   └── 📁 scripts/              # Ready-to-run examples
+│
+├── 📁 docs/                     # Documentation
+│   ├── covariance_estimation.md
+│   └── (more guides)
+│
+├── optimize.py                  # 🎯 Main CLI tool
+├── CLI_GUIDE.md                 # Complete CLI documentation
+├── README.md                    # You are here!
+├── requirements.txt             # Python dependencies
+└── setup_env.bat                # Environment setup
+```
 
 ---
 
 ## 📊 Example Output
 
-The included example optimizes a portfolio of 5 asset classes:
-- **US Stocks** (S&P 500) - 10% expected return
-- **International Stocks** (MSCI EAFE) - 9% expected return
-- **US Bonds** (Aggregate Bond Index) - 4% expected return
-- **REITs** (Real Estate) - 8% expected return
-- **Gold** (Commodities) - 5% expected return
+**Input:** CSV file with historical prices
 
-### Sample Results
+**What You Get:**
 
-**Optimized Portfolio for 8% Target Return:**
-- Optimal weights calculated to minimize risk
-- Portfolio statistics displayed (return, risk, Sharpe ratio)
-- All weights sum to 100%
+1. **Optimal Portfolio Weights**
+   ```
+   US Stocks      40.72%
+   Bonds           6.79%
+   REITs          37.08%
+   Gold           15.41%
+   ```
 
-**Maximum Sharpe Ratio Portfolio:**
-- Best risk-adjusted return combination
-- Highlighted on efficient frontier plot
+2. **Portfolio Statistics**
+   ```
+   Expected Return:  15.54%
+   Risk (Std Dev):    5.24%
+   Sharpe Ratio:     2.585
+   ```
 
----
-
-## 📖 Documentation
-
-### Main Functions
-
-#### Portfolio Metrics
-```python
-calculate_portfolio_return(weights, expected_returns)
-calculate_portfolio_variance(weights, cov_matrix)
-calculate_portfolio_std(weights, cov_matrix)
-calculate_sharpe_ratio(portfolio_return, portfolio_std, risk_free_rate)
-```
-
-#### Optimization
-```python
-optimize_portfolio(expected_returns, cov_matrix, target_return, allow_short_selling)
-optimize_portfolio_no_short(expected_returns, cov_matrix, target_return)
-optimize_portfolio_with_short(expected_returns, cov_matrix, target_return)
-optimize_max_sharpe(expected_returns, cov_matrix, risk_free_rate, allow_short_selling)
-```
-
-#### Efficient Frontier
-```python
-compute_efficient_frontier(expected_returns, cov_matrix, n_points, allow_short_selling)
-plot_efficient_frontier(expected_returns, cov_matrix, asset_names, ...)
-```
-
-#### Visualization
-```python
-plot_correlation_matrix(cov_matrix, asset_names)
-plot_covariance_matrix(cov_matrix, asset_names)
-```
+3. **Professional Visualizations**
+   - Efficient frontier with gradient styling
+   - Color-coded asset markers
+   - Maximum Sharpe ratio highlighted
+   - Modern, clean design
 
 ---
 
-## 🔧 Customization
+## 🎓 How It Works
 
-### Use Your Own Data
+```
+┌─────────────┐
+│ Price CSV   │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────────────┐
+│  Auto-Calculate:    │
+│  • Returns          │
+│  • Covariance       │
+│  • Correlations     │
+└──────┬──────────────┘
+       │
+       ▼
+┌─────────────────────┐
+│  Optimize Markowitz:│
+│  • Min variance     │
+│  • Target return    │
+│  • Max Sharpe       │
+└──────┬──────────────┘
+       │
+       ▼
+┌─────────────────────┐
+│  Professional       │
+│  Visualizations     │
+└─────────────────────┘
+```
 
-Edit the `run_example()` function in `markowitz_portfolio.py`:
+---
+
+## 💡 CSV Format
+
+Your price file should look like this:
+
+```csv
+Date,Stock_A,Stock_B,Bond,Gold
+2020-01-01,100,50,1000,1800
+2020-02-01,102,51,1001,1795
+2020-03-01,101,52,1002,1810
+...
+```
+
+**Requirements:**
+- ✅ First column: Dates
+- ✅ Other columns: Asset prices
+- ✅ Header row with names
+
+The tool **automatically detects** whether your data is daily, weekly, or monthly!
+
+---
+
+## 🛠️ Installation
+
+### Requirements
+
+- Python 3.8 or higher
+- Windows (batch script) or any OS with Python
+
+### Quick Install
+
+```bash
+# Clone repository
+git clone <repository>
+cd "Markowitz Portfolio Optimization"
+
+# Run setup
+.\setup_env.bat  # Windows
+# or manually: python -m venv venv && pip install -r requirements.txt
+```
+
+### Dependencies
+
+All automatically installed by setup script:
+- `numpy` - Numerical computation
+- `scipy` - Statistical functions
+- `cvxpy` - Convex optimization
+- `matplotlib` - Visualizations
+- `pandas` - Data handling
+- `colorama` - Colored terminal output
+
+---
+
+## 📚 Documentation
+
+| Guide | Description |
+|-------|-------------|
+| **[CLI Guide](CLI_GUIDE.md)** | Complete CLI tool documentation |
+| **[Covariance Estimation](docs/covariance_estimation.md)** | How to calculate parameters |
+| **[Examples README](examples/README.md)** | Example scripts guide |
+| **[API Reference](#-api-reference)** | Library function documentation |
+
+---
+
+## 📖 API Reference
+
+### Core Modules
 
 ```python
-# Define your assets
-asset_names = ['Asset A', 'Asset B', 'Asset C']
+from portfolio_optimization import (
+    # Metrics
+    calculate_portfolio_return,
+    calculate_portfolio_variance,
+    calculate_sharpe_ratio,
+    
+    # Optimization
+    optimize_portfolio,
+    optimize_max_sharpe,
+    
+    # Visualization
+    plot_efficient_frontier,
+    plot_correlation_matrix,
+    
+    # Data Utilities
+    estimate_expected_returns,
+    estimate_covariance_matrix,
+)
+```
 
-# Set expected returns (annual, as decimals)
-expected_returns = np.array([0.08, 0.10, 0.06])
+### Quick API Example
 
-# Define covariance matrix
+```python
+import numpy as np
+from portfolio_optimization import optimize_portfolio
+
+# Your data
+returns = np.array([0.10, 0.08, 0.12])
 cov_matrix = np.array([
-    [0.04, 0.01, 0.00],
-    [0.01, 0.09, 0.02],
-    [0.00, 0.02, 0.04]
+    [0.04, 0.01, 0.02],
+    [0.01, 0.03, 0.01],
+    [0.02, 0.01, 0.05]
 ])
 
-# Run optimization
-result = optimize_portfolio_no_short(expected_returns, cov_matrix, target_return=0.08)
-```
+# Optimize
+result = optimize_portfolio(
+    expected_returns=returns,
+    cov_matrix=cov_matrix,
+    target_return=0.09,
+    allow_short_selling=False
+)
 
-### Adjust Parameters
-
-```python
-# Change target return
-target_return = 0.09  # 9%
-
-# Change risk-free rate
-risk_free_rate = 0.03  # 3%
-
-# Allow short selling
-optimize_portfolio(returns, cov, target, allow_short_selling=True)
-
-# Adjust efficient frontier resolution
-compute_efficient_frontier(returns, cov, n_points=200)
+print(f"Weights: {result['weights']}")
+print(f"Risk: {result['risk']*100:.2f}%")
+print(f"Sharpe: {result['sharpe_ratio']:.3f}")
 ```
 
 ---
 
-## 📦 Dependencies
+## 💻 Examples
 
-All dependencies are automatically installed via `setup_env.bat`:
+### Example 1: Basic Optimization
 
-- **numpy** (≥1.24.0) - Numerical computations
-- **scipy** (≥1.10.0) - Statistical functions
-- **cvxpy** (≥1.4.0) - Convex optimization solver
-- **matplotlib** (≥3.7.0) - Visualization
-- **pandas** (≥2.0.0) - Data structures (optional)
+```bash
+python examples/basic_optimization.py
+```
+
+Demonstrates simple portfolio optimization for a target return.
+
+### Example 2: Efficient Frontier
+
+```bash
+python examples/efficient_frontier_demo.py
+```
+
+Generates beautiful efficient frontier visualizations.
+
+### Example 3: Maximum Sharpe Ratio
+
+```bash
+python examples/max_sharpe_demo.py
+```
+
+Finds the best risk-adjusted portfolio.
+
+### Example 4: Estimate from Prices
+
+```bash
+python examples/estimate_from_prices.py
+```
+
+Shows how to calculate parameters from historical data.
 
 ---
 
-## 📐 Mathematical Background
+## 🎨 Visual Enhancements
 
-### Mean-Variance Optimization
+### Modern Plot Aesthetics
 
-**Objective:** Minimize portfolio variance for a target return
+- **Professional color schemes** (blues, purples, golds)
+- **Clean typography** (Segoe UI, modern fonts)
+- **Accessible colors** (colorblind-friendly palettes)
+- **Gradient effects** on plots
+- **Shadow effects** for depth
+- **Clean boundaries** (no top/right spines)
+- **High DPI** (200 DPI for crisp output)
 
-```
-Minimize: σ²_p = w^T * Σ * w
+### Styled Terminal Output
 
-Subject to:
-  w^T * μ = R_target    (target return constraint)
-  w^T * 1 = 1           (weights sum to 1)
-  w ≥ 0                 (no short selling, optional)
-```
-
-Where:
-- `w` = portfolio weights
-- `Σ` = covariance matrix
-- `μ` = expected returns vector
-- `R_target` = target portfolio return
-
-### Sharpe Ratio
-
-```
-SR = (R_p - R_f) / σ_p
-```
-
-Where:
-- `R_p` = portfolio return
-- `R_f` = risk-free rate
-- `σ_p` = portfolio standard deviation
+- ✅ **Green checks** for success
+- ⚠️ **Yellow warnings**
+- ✗ **Red errors**
+- ℹ️ **Blue info**
+- **Aligned tables** for better readability
 
 ---
 
-## 🎯 Use Cases
+## 🤝 Contributing
 
-- **Portfolio Management** - Optimize asset allocation for institutional or retail portfolios
-- **Risk Analysis** - Understand risk-return tradeoffs across different asset mixes
-- **Research** - Study effects of constraints (short selling, position limits) on optimal portfolios
-- **Education** - Learn and visualize modern portfolio theory concepts
-- **Backtesting** - Historical analysis of optimal portfolio construction
-
----
-
-## 📝 File Structure
-
-```
-Markowitz Portfolio Optimization/
-│
-├── markowitz_portfolio.py      # Main implementation (all functions)
-├── requirements.txt            # Python dependencies
-├── setup_env.bat              # Virtual environment setup script
-├── venv/                      # Virtual environment (created by setup)
-│
-└── Generated outputs:
-    ├── correlation_matrix.png
-    ├── efficient_frontier_no_short.png
-    └── efficient_frontier_with_short.png
-```
-
----
-
-## 🔬 Technical Details
-
-**Optimization Solver:** CVXPY with ECOS/SCS backend
-
-**Numerical Precision:** 64-bit floating point (NumPy default)
-
-**Constraint Handling:** Quadratic programming with linear constraints
-
-**Error Handling:** Graceful handling of infeasible problems and numerical issues
-
----
-
-## 🎓 Next Steps
-
-### For Production Use
-1. Replace example data with real historical returns and covariances
-2. Add functions to estimate parameters from price data
-3. Implement transaction cost modeling
-4. Add position size limits or sector constraints
-5. Create backtesting framework
-
-### Advanced Features
-- Black-Litterman model (incorporate investor views)
-- Risk parity portfolios
-- Monte Carlo simulation for uncertainty analysis
-- Multi-period rebalancing strategies
-- Factor-based optimization
+Contributions welcome! This is a clean, professional codebase with:
+- Type hints throughout
+- Comprehensive docstrings
+- Modular architecture
+- Well-organized structure
 
 ---
 
 ## 📄 License
 
-This code is provided for educational and professional use. Adapt and modify as needed for your specific applications.
+MIT License - feel free to use in your projects!
 
 ---
 
-## 🙋 Support
+## 👤 Author
 
-All functions include comprehensive docstrings with:
-- Detailed parameter descriptions
-- Return value specifications
-- Mathematical formulas
-- Usage examples
-
-Review the inline comments in `markowitz_portfolio.py` for implementation details.
+**Ankush Arora**
 
 ---
 
-## ✨ Author
+## 🌟 Key Highlights
 
-Ankush Arora
+✨ **Production-Ready** - Clean, modular, professional code  
+✨ **User-Friendly** - Simple CLI, great documentation  
+✨ **Beautiful** - Modern visualizations, professional aesthetics  
+✨ **Comprehensive** - Full Markowitz framework implementation  
+✨ **Flexible** - Use as CLI, library, or modify examples  
+✨ **Well-Documented** - Extensive guides and API docs  
 
-**Version:** 1.0  
-**Date:** 2025-11-24
+---
+
+<div align="center">
+
+### Ready to optimize your portfolio?
+
+```bash
+python optimize.py your_prices.csv
+```
+
+**[Get Started](#-quick-start)** • **[View Examples](#-examples)** • **[Read Docs](#-documentation)**
+
+</div>
